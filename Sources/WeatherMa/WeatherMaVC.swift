@@ -21,7 +21,12 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
     
-    override func viewDidLoad() {
+    
+    public static let storyboardVC = UIStoryboard(name: "WeatherMaVC", bundle: Bundle.module).instantiateInitialViewController()!
+
+
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
@@ -110,7 +115,7 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
             }
             }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways || status == .authorizedWhenInUse {
             if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
                 if CLLocationManager.isRangingAvailable() {
