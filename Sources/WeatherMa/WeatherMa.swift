@@ -1,6 +1,6 @@
-public struct WeatherMa {
-    public private(set) var text = "Hello, World!"
+import UIKit
 
-    public init() {
-    }
+public struct WeatherMa {
+
+    public init() {}
 }
