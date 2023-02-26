@@ -59,40 +59,40 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
                         guard let self else {return}
                                                         
                         
-                        self.tempLabel.text = "\(Int(weather.currentWeather?.temperature ?? 0) ?? 0)°"
+                        self.tempLabel.text = "\(Int(weather.currentWeather?.temperature ?? 0))°"
                         guard let temp = weather.currentWeather?.temperature else {
-                            self.backgroundImage.image = UIImage(named: "-3")
+                            self.backgroundImage.image = UIImage(named: "-3", in: .module, compatibleWith: .none)
                             return}
                         switch temp {
                         case (-100)...(-3) :
-                            self.backgroundImage.image = UIImage(named: "-3")
+                            self.backgroundImage.image = UIImage(named: "-3", in: .module, compatibleWith: .none)
                             
                         case (-3)...(-1) :
-                            self.backgroundImage.image = UIImage(named: "-1")
+                            self.backgroundImage.image = UIImage(named: "-1", in: .module, compatibleWith: .none)
 
                         case (-1)...0:
-                            self.backgroundImage.image = UIImage(named: "0")
+                            self.backgroundImage.image = UIImage(named: "0", in: .module, compatibleWith: .none)
 
                         case 0...2:
-                            self.backgroundImage.image = UIImage(named: "2")
+                            self.backgroundImage.image = UIImage(named: "2", in: .module, compatibleWith: .none)
 
                         case 2...9:
-                            self.backgroundImage.image = UIImage(named: "9")
+                            self.backgroundImage.image = UIImage(named: "9", in: .module, compatibleWith: .none)
 
                         case 9...12:
-                            self.backgroundImage.image = UIImage(named: "12")
+                            self.backgroundImage.image = UIImage(named: "12", in: .module, compatibleWith: .none)
 
                         case 12...16:
-                            self.backgroundImage.image = UIImage(named: "16")
+                            self.backgroundImage.image = UIImage(named: "16", in: .module, compatibleWith: .none)
 
                         case 16...18:
-                            self.backgroundImage.image = UIImage(named: "18")
+                            self.backgroundImage.image = UIImage(named: "18", in: .module, compatibleWith: .none)
 
                         case 18...22:
-                            self.backgroundImage.image = UIImage(named: "22")
+                            self.backgroundImage.image = UIImage(named: "22", in: .module, compatibleWith: .none)
 
                         default :
-                            self.backgroundImage.image = UIImage(named: "22")
+                            self.backgroundImage.image = UIImage(named: "22", in: .module, compatibleWith: .none)
 
                         }
                         
@@ -143,38 +143,38 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
                                 
                                 self.tempLabel.text = "\(Int(weather.currentWeather?.temperature ?? 0) ?? 0)°"
                                 guard let temp = weather.currentWeather?.temperature else {
-                                    self.backgroundImage.image = UIImage(named: "-3")
+                                    self.backgroundImage.image = UIImage(named: "-3", in: .module, compatibleWith: .none)
                                     return}
                                 switch temp {
                                 case (-100)...(-3) :
-                                    self.backgroundImage.image = UIImage(named: "-3")
+                                    self.backgroundImage.image = UIImage(named: "-3", in: .module, compatibleWith: .none)
                                     
                                 case (-3)...(-1) :
-                                    self.backgroundImage.image = UIImage(named: "-1")
+                                    self.backgroundImage.image = UIImage(named: "-1", in: .module, compatibleWith: .none)
 
                                 case (-1)...0:
-                                    self.backgroundImage.image = UIImage(named: "0")
+                                    self.backgroundImage.image = UIImage(named: "0", in: .module, compatibleWith: .none)
 
                                 case 0...2:
-                                    self.backgroundImage.image = UIImage(named: "2")
+                                    self.backgroundImage.image = UIImage(named: "2", in: .module, compatibleWith: .none)
 
                                 case 2...9:
-                                    self.backgroundImage.image = UIImage(named: "9")
+                                    self.backgroundImage.image = UIImage(named: "9", in: .module, compatibleWith: .none)
 
                                 case 9...12:
-                                    self.backgroundImage.image = UIImage(named: "12")
+                                    self.backgroundImage.image = UIImage(named: "12", in: .module, compatibleWith: .none)
 
                                 case 12...16:
-                                    self.backgroundImage.image = UIImage(named: "16")
+                                    self.backgroundImage.image = UIImage(named: "16", in: .module, compatibleWith: .none)
 
                                 case 16...18:
-                                    self.backgroundImage.image = UIImage(named: "18")
+                                    self.backgroundImage.image = UIImage(named: "18", in: .module, compatibleWith: .none)
 
                                 case 18...22:
-                                    self.backgroundImage.image = UIImage(named: "22")
+                                    self.backgroundImage.image = UIImage(named: "22", in: .module, compatibleWith: .none)
 
                                 default :
-                                    self.backgroundImage.image = UIImage(named: "22")
+                                    self.backgroundImage.image = UIImage(named: "22", in: .module, compatibleWith: .none)
 
                                 }
                                 
