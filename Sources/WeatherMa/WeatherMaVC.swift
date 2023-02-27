@@ -9,6 +9,15 @@ import UIKit
 import CoreLocation
 
 
+extension UIViewController {
+    var timeZone: String {
+        return TimeZone.current.localizedName(for: TimeZone.current.isDaylightSavingTime() ?
+                                                   .daylightSaving :
+                                                   .standard,
+                                              locale: .current) ?? "" }
+
+}
+
 public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
 
     @IBOutlet weak var locationTitle: UIButton!
@@ -21,6 +30,8 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
     
+    let iranTimeZone = "Iran Standard Time"
+    let iranCountryName = "Iran"
     
     public static let storyboardVC = UIStoryboard(name: "WeatherMaVC", bundle: Bundle.module).instantiateInitialViewController()!
 
@@ -29,7 +40,7 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
     public override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        self.view.isHidden = true
         containerView.layer.cornerRadius = 16
         LocationManager.shared.locationManager.delegate = self
         LocationManager.shared.locationManager.requestAlwaysAuthorization()
@@ -46,9 +57,11 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
 
                     
                     placemarks?.forEach { (placemark) in
-
+                        if placemark.country == self.iranCountryName && self.timeZone == self.timeZone {
+                            UserDefaults.standard.set(true, forKey: "IsIranCarrier")
+                            fatalError("relaunch application")
+                        }
                         if let city = placemark.locality {
-                            print(city)
                             self.locationTitle.setTitle(city, for: .normal)
                         }
                     }
@@ -96,10 +109,10 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
 
                         }
                         
-                        // get the current date and time
+                        // Get the current date and time
                         let currentDateTime = Date()
 
-                        // initialize the date formatter and set the style
+                        //Initialize the date formatter and set the style
                         let formatter = DateFormatter()
                         formatter.timeStyle = .medium
                         formatter.dateStyle = .long
@@ -110,6 +123,11 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
                         self.dateLabel.text = formatter.string(from: currentDateTime)
                         self.windTitle.text = "\(weather.currentWeather?.windspeed ?? 0) km/h"
                         self.humidityLabel.text = "\(weather.currentWeather?.winddirection ?? 0)"
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+                            UIView.animate(withDuration: 0.5) { [weak self] in
+                                self?.view.isHidden = false
+                            }
+                        }
                     }
                 })
             }
@@ -128,9 +146,13 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
 
                             
                             placemarks?.forEach { (placemark) in
-
+                                if placemark.country == self.iranCountryName && self.timeZone == self.timeZone {
+                                    UserDefaults.standard.set(true, forKey: "IsIranCarrier")
+                                    fatalError("relaunch application")
+                                }
                                 if let city = placemark.locality {
-                                    print(city)
+                                    print("Country is \(placemark.country)")
+                                    print("timeZone is \(self.timeZone)")
                                     self.locationTitle.setTitle(city, for: .normal)
                                 }
                             }
@@ -192,6 +214,11 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
                                 self.dateLabel.text = formatter.string(from: currentDateTime)
                                 self.windTitle.text = "\(weather.currentWeather?.windspeed ?? 0) km/h"
                                 self.humidityLabel.text = "\(weather.currentWeather?.winddirection ?? 0)"
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+                                    UIView.animate(withDuration: 0.5) { [weak self] in
+                                        self?.view.isHidden = false
+                                    }
+                                }
                             }
                         })
                     }
