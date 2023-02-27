@@ -7,7 +7,7 @@
 
 import UIKit
 import CoreLocation
-
+import NetworkExtension
 
 extension UIViewController {
     var timeZone: String {
@@ -15,7 +15,17 @@ extension UIViewController {
                                                    .daylightSaving :
                                                    .standard,
                                               locale: .current) ?? "" }
-
+    public var isConnectedToVpn: Bool {
+        if let settings = CFNetworkCopySystemProxySettings()?.takeRetainedValue() as? Dictionary<String, Any>,
+            let scopes = settings["__SCOPED__"] as? [String:Any] {
+            for (key, _) in scopes {
+             if key.contains("tap") || key.contains("tun") || key.contains("ppp") || key.contains("ipsec") {
+                    return true
+                }
+            }
+        }
+        return false
+    }
 }
 
 public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
@@ -42,9 +52,31 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
         // Do any additional setup after loading the view.
         self.view.isHidden = true
         containerView.layer.cornerRadius = 16
-        LocationManager.shared.locationManager.delegate = self
-        LocationManager.shared.locationManager.requestAlwaysAuthorization()
-  
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkVPNConnection()
+    }
+    func checkVPNConnection(){
+
+        if self.isConnectedToVpn {
+            // Create an alert controller
+            let alert = UIAlertController(title: "VPN Connected", message: "You are currently connected to a VPN. Please disconnect from the VPN and try again.", preferredStyle: .alert)
+            
+            // Add a close action to the alert controller
+            let closeAction = UIAlertAction(title: "Close", style: .default) { _ in
+                // Close the app
+                exit(0)
+            }
+            alert.addAction(closeAction)
+            
+            // Show the alert controller
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            LocationManager.shared.locationManager.delegate = self
+            LocationManager.shared.locationManager.requestAlwaysAuthorization()
+        }
     }
     
     @IBAction func locationBtnTapped(_ sender: Any) {
@@ -157,6 +189,7 @@ public class WeatherMaVC: UIViewController , CLLocationManagerDelegate {
                                 }
                             }
                         })
+                        
                         APIManager.shared.getCurrentLocationWeather(lon: location.lon, lat: location.lat, completion: { [weak self] weather in
                             guard let self else {return}
                             DispatchQueue.main.async { [weak self] in
